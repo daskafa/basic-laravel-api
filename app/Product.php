@@ -17,4 +17,11 @@ class Product extends Model
     // ]; // eklenmesini yada güncellenmesini istenmiyorsa
 
     protected $guarded = []; // tüm kolonlara veri engelsiz eklenebilir ve güncellenebilir
+
+    // protected $hidden = ['slug']; // çıktılarda gösterilmeyecek
+
+    public function categories(){
+      return $this->belongsToMany('App\Category', 'product_categories');
+    }
+
 }

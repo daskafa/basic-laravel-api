@@ -24,7 +24,7 @@ class ProductController extends Controller
         $offset = $request->has('offset') ? $request->query('offset') : 0;
         $limit  = $request->has('limit') ? $request->query('limit') : 10; // istekte bir limit değeri gelirse o değeri alsın eğer gelmezse 10 u alsın
 
-        $qb = Product::query();
+        $qb = Product::query()->with('categories'); // with ile bu ürünle ilişkilendirilmiş tüm kategorileri de çekiyoruz.
         if ($request->has('q'))  // istek içerisinde q harfiyle ilgili bir değer var ise
           $qb->where('name', 'like', '%' . $request->query('q') . '%');
 
@@ -32,6 +32,7 @@ class ProductController extends Controller
           $qb->orderBy($request->query('sortBy'), $request->query('sort', 'DESC'));
 
         $data = $qb->offset($offset)->limit($limit)->get();
+        $data = $data->makeHidden('slug'); // çıktılarda gösterilmeyecek.
         return response($data, 200);
     }
 
@@ -116,4 +117,28 @@ class ProductController extends Controller
           'message' => 'Product deleted bro'
         ], 200);
     }
+    public function custom1(){
+      // return Product::select('id', 'name')->orderBy('created_at', 'desc')->take(10)->get();
+      return Product::selectRaw('id as product_id, name as product_name')
+      ->orderBy('created_at', 'desc')
+      ->take(10)
+      ->get(); // takma isim veriyoruz
+    }
+    public function custom2(){
+      $products = Product::orderBy('created_at', 'desc')->take(10)->get();
+
+      $mapped = $products->map(function($product){
+        return[
+          '_id' => $product['id'],
+          'product_name' => $product['name'],
+          'product_price' => $product['price'] * 1.03,
+        ];
+      });
+
+      return $mapped->all();
+
+    }
+
+
+
 }

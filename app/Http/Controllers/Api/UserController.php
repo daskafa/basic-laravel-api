@@ -28,6 +28,10 @@ class UserController extends Controller
         $qb->orderBy($request->query('sortBy'), $request->query('sort', 'DESC'));
 
       $data = $qb->offset($offset)->limit($limit)->get();
+
+      // // burada normalde olmayan bir kolon ismi oluşturuyoruz ve daha önceden var olan first_name ve last_name kolonlarından full_name adında bir kolon oluşturuyoruz.      
+      $data->each->setAppends(['full_name']); // model de tanımlayabiliriz ama o zaman o modelle yaptığımız tüm işlemleri etkileyeceğimiz için burada tanımlıyoruz
+
       return response($data, 200);
     }
 

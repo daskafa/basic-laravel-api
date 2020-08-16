@@ -35,5 +35,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'created_at' => 'date'
     ];
+
+    // burada normalde olmayan bir kolon ismi oluşturuyoruz ve daha önceden var olan first_name ve last_name kolonlarından full_name adında bir kolon oluşturuyoruz.
+    // protected $appends = ['full_name']; // ama burada oluşturduğumuz da bu model ile yapılan tüm işlemlerde geçerli olacağı için ilgili controller a yazmak daha sağlıklı.
+
+    public function getFullNameAttribute(){ // üstte verdiğimiz ismi camelcase tanımlıyoruz
+      return $this->first_name . " " . $this->last_name;
+    }
 }
