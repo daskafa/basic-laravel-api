@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\UserCollection;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -103,12 +104,20 @@ class UserController extends Controller
     }
 
     public function custom1(){
-      // $user2 = User::find(2);
-      // return new UserResource($user2);
+      $user2 = User::find(2);
+      UserResource::withoutWrapping();
+      return new UserResource($user2);
 
-      // $users = User::all();
+      $users = User::all();
       // return UserResource::collection($users); // birden fazla değer döndüreceğimiz zaman bu şekilde collection kullanıyoruz.
-    
+      // return new UserCollection($users);
+
+      return UserResource::collection($users)->additional([
+        'meta'=> [
+          'total_users' => $users->count(),
+          'custom' => 'value'
+        ]
+      ]);
     }
 
 

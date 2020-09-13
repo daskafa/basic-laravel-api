@@ -33,6 +33,7 @@ Route::get('products/custom1', 'Api\ProductController@custom1');
 Route::get('products/custom2', 'Api\ProductController@custom2');
 Route::get('categories/report1', 'Api\CategoryController@report1');
 Route::get('users/custom1', 'Api\UserController@custom1');
+Route::get('products/custom3', 'Api\ProductController@custom3');
 
 
 Route::apiResources([
