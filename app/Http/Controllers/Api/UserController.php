@@ -108,6 +108,7 @@ class UserController extends Controller
 
       // $users = User::all();
       // return UserResource::collection($users); // birden fazla değer döndüreceğimiz zaman bu şekilde collection kullanıyoruz.
+    
     }
 
 
