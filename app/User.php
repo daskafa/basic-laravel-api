@@ -35,7 +35,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'created_at' => 'date'
+        'created_at' => 'date:Y-m-d'
     ];
 
     // burada normalde olmayan bir kolon ismi oluşturuyoruz ve daha önceden var olan first_name ve last_name kolonlarından full_name adında bir kolon oluşturuyoruz.

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Category;
 use Illuminate\Support\Str;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -29,7 +30,7 @@ class UserController extends Controller
 
       $data = $qb->offset($offset)->limit($limit)->get();
 
-      // // burada normalde olmayan bir kolon ismi oluşturuyoruz ve daha önceden var olan first_name ve last_name kolonlarından full_name adında bir kolon oluşturuyoruz.      
+      // // burada normalde olmayan bir kolon ismi oluşturuyoruz ve daha önceden var olan first_name ve last_name kolonlarından full_name adında bir kolon oluşturuyoruz.
       $data->each->setAppends(['full_name']); // model de tanımlayabiliriz ama o zaman o modelle yaptığımız tüm işlemleri etkileyeceğimiz için burada tanımlıyoruz
 
       return response($data, 200);
@@ -100,4 +101,14 @@ class UserController extends Controller
         'message' => 'User deleted bro'
       ], 200);
     }
+
+    public function custom1(){
+      // $user2 = User::find(2);
+      // return new UserResource($user2);
+
+      // $users = User::all();
+      // return UserResource::collection($users); // birden fazla değer döndüreceğimiz zaman bu şekilde collection kullanıyoruz.
+    }
+
+
 }
